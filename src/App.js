@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Sidebar from "./Assets/Components/Sidebar/sidebar";
+import Topbar from "./Assets/Components/Topbar/topbar";
+import Dashboard from "./Assets/Page/Dashboard";
+import Usuarios from "./Assets/Page/Usuarios";
+import "./App.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* App a pantalla completa */}
+      <div className="flex h-screen bg-[#1e293b] text-white">
+        {/* Lado izquierdo */}
+        <Sidebar />
+
+        {/* Lado derecho: columna con Topbar arriba y contenido debajo */}
+        <div className="flex flex-col flex-1">
+          {/* Topbar pegado arriba; NO usar fixed, usa sticky si quieres */}
+          <div className="sticky top-0 z-10">
+            <Topbar />
+          </div>
+
+          {/* Contenido que crece y hace scroll */}
+          <main className="flex-1 overflow-y-auto p-6">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/usuarios" element={<Usuarios />} />
+              {/* otras rutas… */}
+              <Route path="*" element={<Dashboard />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
+    </Router>
   );
 }
-
-export default App;
